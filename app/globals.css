@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --color-background: 255 252 252;
+    --color-foreground: 0 12 28;
+    --color-action: 236 25 81;
+}
+
+/* @media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+} */
+@layer base {
+    body {
+        @apply bg-background text-foreground
+    }
+}
