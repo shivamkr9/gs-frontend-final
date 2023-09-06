@@ -2,7 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import Provider from "@/redux/provider";
-import { Setup } from "@/components/utils";
+import { Setup, LoadingSpinner } from "@/components/utils";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +21,9 @@ export default function RootLayout({
             <body className={inter.className}>
                 <Provider>
                     <Setup />
-                    {children}
+                    <LoadingSpinner>
+                        {children}
+                    </LoadingSpinner>
                 </Provider>
             </body>
         </html>

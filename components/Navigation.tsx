@@ -1,4 +1,4 @@
-import Link from "next/link";
+import NavLink from "@/components/NavLink"
 import NavMenu from "./navMenu";
 
 export default function Navigation() {
@@ -6,7 +6,7 @@ export default function Navigation() {
         <div className='shadow'>
             <div className='container flex justify-between m-auto h-16 items-center'>
                 <div>
-                    <Link href='/'>Logo</Link>
+                    <NavLink isBanner href='/'>Logo</NavLink>
                 </div>
                 <div>
                     <NavMenu />
