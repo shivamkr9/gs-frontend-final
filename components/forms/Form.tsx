@@ -58,7 +58,7 @@ export default function Form({ onChange, onSubmit, config, isLoading, btnText, l
                 >
                     {link.linkText}
                 </Link>
-            </p> : <></>}
+            </p> : null}
         </form>
     )
 }
