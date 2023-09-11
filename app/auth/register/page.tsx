@@ -1,5 +1,4 @@
 
-
 import { RegisterForm } from "@/components/forms";
 import Image from "next/image";
 

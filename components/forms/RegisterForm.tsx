@@ -1,60 +1,55 @@
 "use client";
 import { useRegister } from '@/hooks';
-import { Form } from "@/components/forms"
+import Link from 'next/link';
+import { Input } from "@/components/forms";
+import { Spinner } from "@/components/common";
+import { ChangeEvent, FormEvent } from "react";
+
+interface Config {
+    name: string;
+    label: string;
+    type: string;
+    placeholder: string;
+}
 
 
 export default function RegisterForm() {
 
     const {
-        name,
-        mobile,
-        email,
-        password,
-        password2,
+        formik,
         isLoading,
-        onChange,
-        onSubmit,
+
     } = useRegister();
 
-    const config = [
+    const config: Config[] = [
         {
-            labelText: 'Name',
-            labelId: 'name',
+            label: 'Name',
+            name: 'name',
             type: 'text',
-            value: name,
-            required: true,
             placeholder: "Name"
         },
         {
-            labelText: 'Mobile',
-            labelId: 'mobile',
+            label: 'Mobile',
+            name: 'mobile',
             type: 'number',
-            value: mobile,
-            required: true,
             placeholder: "9999999999",
         },
         {
-            labelText: 'Email address',
-            labelId: 'email',
+            label: 'Email address',
+            name: 'email',
             type: 'email',
-            value: email,
-            required: true,
             placeholder: "user@example.com",
         },
         {
-            labelText: 'Password',
-            labelId: 'password',
+            label: 'Password',
+            name: 'password',
             type: 'password',
-            value: password,
-            required: true,
             placeholder: "********",
         },
         {
-            labelText: 'Confirm password',
-            labelId: 'password2',
+            label: 'Confirm password',
+            name: 'password2',
             type: 'password',
-            value: password2,
-            required: true,
             placeholder: "********",
         },
     ];
@@ -67,14 +62,34 @@ export default function RegisterForm() {
     }
 
     return (
-        <Form
-            config={config}
-            isLoading={isLoading}
-            btnText='Sign up'
-            onChange={onChange}
-            onSubmit={onSubmit}
-            link={footerLink}
-        />
+        <form className='space-y-4 md:space-y-6' onSubmit={formik.handleSubmit} >
+            {config.map(input => (
 
+                <Input
+                    key={input.name}
+                    label={input.label}
+                    type={input.type}
+                    name={input.name} // Provide a default name
+                    placeholder={input.label} // Provide a default placeholder
+                    formik={formik}
+                />
+            ))}
+
+            <button
+                type='submit'
+                className='w-full text-background bg-action hover:bg-action/90 focus:ring-4 focus:outline-none focus:ring-action/30 font-medium rounded-sm text-sm px-5 py-2.5 text-center transition'
+            >
+                {isLoading ? <Spinner sm /> : `${footerLink.linkText}`}
+            </button>
+            {footerLink ? <p className='text-sm font-normal text-foreground/80 '>
+                {footerLink.linkTitle}{" "}
+                <Link
+                    href={footerLink.linkUrl}
+                    className='font-semibold text-action/80 hover:underline '
+                >
+                    {footerLink.linkText}
+                </Link>
+            </p> : null}
+        </form>
     )
 }

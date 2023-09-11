@@ -1,46 +1,64 @@
 "use client";
 import { useResetPasswordConfirm } from '@/hooks';
-import { Form } from "@/components/forms"
+import { Spinner } from '../common';
+import { Input } from "@/components/forms";
 
 interface Props {
     uid: string;
     token: string;
 }
 
+interface Config {
+    name: string;
+    label: string;
+    type: string;
+    placeholder: string;
+}
+
 
 export default function ResetPassConfirm({ uid, token }: Props) {
 
-    const { new_password, re_new_password, isLoading, onChange, onSubmit } =
-        useResetPasswordConfirm(uid, token);
+    const {
+        formik,
+        isLoading,
+    } = useResetPasswordConfirm(uid, token);
 
-    const config = [
+    const config: Config[] = [
         {
-            labelText: 'New password',
-            labelId: 'new_password',
-            type: 'text',
-            value: new_password,
-            required: true,
+            label: 'Password',
+            name: 'password',
+            type: 'password',
             placeholder: "********",
         },
-
         {
-            labelText: 'Confirm new password',
-            labelId: 're_new_password',
+            label: 'Confirm password',
+            name: 'password2',
             type: 'password',
-            value: re_new_password,
-            required: true,
             placeholder: "********",
         },
 
     ];
     return (
-        <Form
-            config={config}
-            isLoading={isLoading}
-            btnText='Log in'
-            onChange={onChange}
-            onSubmit={onSubmit}
-        />
+        <form className='space-y-4 md:space-y-6' onSubmit={formik.handleSubmit} >
+            {config.map(input => (
+
+                <Input
+                    key={input.name}
+                    label={input.label}
+                    type={input.type}
+                    name={input.name} // Provide a default name
+                    placeholder={input.label} // Provide a default placeholder
+                    formik={formik}
+                />
+            ))}
+
+            <button
+                type='submit'
+                className='w-full text-background bg-action hover:bg-action/90 focus:ring-4 focus:outline-none focus:ring-action/30 font-medium rounded-sm text-sm px-5 py-2.5 text-center transition'
+            >
+                {isLoading ? <Spinner sm /> : `Update Password`}
+            </button>
+        </form>
 
     )
 }
